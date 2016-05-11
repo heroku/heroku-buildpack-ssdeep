@@ -31,7 +31,7 @@ echo "Using ssdeep version: 2.13" | indent
 VENDORED_SSDEEP="vendor/ssdeep/2.13"
 TARGET_VENDOR_DIR="vendor"
 
-if [ ! -d $CACHE_DIR/$VENDORED_GEOS ]; then
+if [ ! -d $CACHE_DIR/$VENDORED_SSDEEP ]; then
   echo "-----> Fetching and Vendoring ssdeep"
 
   location="${CACHE_DIR}/${VENDORED_SSDEEP}"
