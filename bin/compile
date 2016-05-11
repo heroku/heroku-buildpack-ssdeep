@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir> <env-dir>
+
+# Parameters
+BUILD_DIR=$1
+CACHE_DIR="${2}/${STACK}"
+
+# Fail fast
+set -e
+
+# Debug
+set -x
+
+# Functions
+function indent() {
+  c='s/^/       /'
+  case $(uname) in
+    Darwin) sed -l "$c";;
+    *)      sed -u "$c";;
+  esac
+}
+
+# Configuration
+SSDEEP_VERSION='2.13'
+S3_BUCKET='heroku-security-buildpacks'
+
+# Display some information
+echo "Using ssdeep version: 2.13" | indent
+
+# Vendor directories
+VENDORED_SSDEEP="vendor/ssdeep/2.13"
+TARGET_VENDOR_DIR="vendor"
+
+if [ ! -d $CACHE_DIR/$VENDORED_GEOS ]; then
+  echo "-----> Fetching and Vendoring ssdeep"
+
+  location="${CACHE_DIR}/${VENDORED_SSDEEP}"
+  rm -rf "$CACHE_DIR/vendor/ssdeep"
+
+  mkdir -p $location
+  package="https://${S3_BUCKET}.s3.amazonaws.com/${STACK}/ssdeep-$SSDEEP_VERSION.tar.gz"
+  curl $package -s -o - | tar xzf - -C $location
+fi
+
+mkdir -p $BUILD_DIR/$TARGET_VENDOR_DIR
+cp -r $CACHE_DIR/$VENDORED_SSDEEP/* $BUILD_DIR/$TARGET_VENDOR_DIR &> /dev/null || true
+
+echo "-----> Vendoring ssdeep libraries done"
