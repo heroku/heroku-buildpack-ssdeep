@@ -28,7 +28,7 @@ S3_BUCKET='heroku-security-buildpacks'
 echo "Using ssdeep version: 2.13" | indent
 
 # Vendor directories
-VENDORED_SSDEEP="vendor/ssdeep/2.13"
+VENDORED_SSDEEP="vendor/ssdeep-/2.13"
 TARGET_VENDOR_DIR="vendor"
 
 if [ ! -d $CACHE_DIR/$VENDORED_SSDEEP ]; then
