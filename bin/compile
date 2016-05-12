@@ -8,9 +8,6 @@ CACHE_DIR="${2}/${STACK}"
 # Fail fast
 set -e
 
-# Debug
-set -x
-
 # Functions
 function indent() {
   c='s/^/       /'
@@ -32,7 +29,7 @@ VENDORED_SSDEEP="vendor/ssdeep/2.13"
 TARGET_VENDOR_DIR="vendor"
 
 if [ ! -d $CACHE_DIR/$VENDORED_SSDEEP ]; then
-  echo "-----> Fetching and Vendoring ssdeep" | indent
+  echo "Fetching and Vendoring ssdeep" | indent
 
   location="${CACHE_DIR}/${VENDORED_SSDEEP}"
   rm -rf "$CACHE_DIR/vendor/ssdeep"
